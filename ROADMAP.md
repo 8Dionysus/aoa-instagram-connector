@@ -9,10 +9,13 @@
 
 ## Phase 1 — evidence adapter
 
-- [ ] reverify official API, scopes, quotas, terms, and review path
-- [ ] add OAuth or app-auth flow using operator-local secret storage
-- [ ] implement bounded reads and normalized evidence packets
-- [ ] add synthetic fixtures and policy/negative tests
+- [x] reverify Instagram Login, basic scope, token lifetime, and access levels
+- [x] add an owner-local mode-0600 App Dashboard token path
+- [x] implement bounded profile/media reads and normalized evidence packets
+- [x] add synthetic transport, secret-boundary, and normalization tests
+- [ ] receive the owner token and verify one real account read
+- [ ] add unattended OAuth callback and refresh only with runtime ownership
+- [ ] admit comments, mentions, insights, or webhooks separately
 
 ## Phase 2 — preparation
 

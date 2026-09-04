@@ -4,12 +4,18 @@ Provider: Instagram
 
 Policy snapshot: 2026-09-04. Reverify all live conditions before adapter work.
 
+## Implemented, awaiting owner token
+
+- read: professional_account_profile via `GET /me`
+- read: one bounded page of professional_account_media
+
+Required scope: `instagram_business_basic`.
+
 ## Planned official surfaces
 
-- read: professional_account_media
 - read: comments
 - read: mentions
-- read: hashtag_media
+- read: media_insights
 - publication-plan target: image
 - publication-plan target: video
 - publication-plan target: reel
@@ -17,6 +23,8 @@ Policy snapshot: 2026-09-04. Reverify all live conditions before adapter work.
 - publication-plan target: story
 - deferred: consumer_account_access
 - deferred: arbitrary_public_search
+- deferred: hashtag_media
+- deferred: ads_and_tagging
 
 ## Admission rules
 
@@ -29,6 +37,10 @@ Policy snapshot: 2026-09-04. Reverify all live conditions before adapter work.
 
 ## Current provider boundary
 
-Official API access is centered on authorized professional accounts. Consumer-account access and unrestricted public search are not assumed; Stories and other publishing surfaces must be rechecked against account type and current Meta review requirements.
+Instagram Login supports professional Business and Creator accounts without a
+linked Facebook Page. It does not grant consumer-account, ads, or tagging
+access. Standard Access applies only to accounts owned or managed by an app
+role; broader service requires Advanced Access and App Review.
 
-Official documentation: https://developers.facebook.com/docs/instagram-platform/
+Official documentation:
+https://developers.facebook.com/documentation/instagram-platform/instagram-api-with-instagram-login

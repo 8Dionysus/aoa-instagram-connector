@@ -5,15 +5,15 @@
 Turn authorized Instagram surfaces into reproducible AoA evidence and
 approval-ready publication plans while keeping external write effects explicit.
 
-## Phase 0
+## Current phase
 
-- establish the independent repository owner
-- preserve a common social-connector contract
-- record provider-specific policy limits
-- provide install, doctor, validation, and CI surfaces
-- keep all network and publication effects disabled
+- preserve the independent repository owner and common social-connector contract
+- provide Instagram Login configuration without storing secrets in Git
+- perform bounded `/me` and owned-media reads
+- normalize owned media into evidence packets
+- keep publication, comments, messages, webhooks, and runtime effects disabled
 
-## Success after Phase 0
+## Success after source preparation
 
 A later adapter may be called operational only after official API access, scoped
 credentials, provider review, runtime admission, and ordinary consumer acceptance

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the symmetric Phase 0 connector source surface."""
+"""Validate the Instagram Phase 1 source surface."""
 
 from __future__ import annotations
 
@@ -33,15 +33,23 @@ REQUIRED = (
     "connector/schemas/publication_receipt.schema.json",
     "docs/ARCHITECTURE.md",
     "docs/RUNTIME_CONTRACT.md",
+    "docs/SETUP_INSTAGRAM.md",
     "docs/decisions/README.md",
     "docs/decisions/AOA-INSTAGRAM-D-0001-independent-provider-owner.md",
+    "docs/decisions/AOA-INSTAGRAM-D-0002-instagram-login-basic-read-bootstrap.md",
     "evals/README.md",
     "pyproject.toml",
     "stats/README.md",
     "src/aoa_instagram_connector/__init__.py",
     "src/aoa_instagram_connector/__main__.py",
     "src/aoa_instagram_connector/cli.py",
+    "src/aoa_instagram_connector/client.py",
+    "src/aoa_instagram_connector/config.py",
+    "src/aoa_instagram_connector/evidence.py",
+    "tests/test_client.py",
     "tests/test_cli.py",
+    "tests/test_config.py",
+    "tests/test_evidence.py",
 )
 FORBIDDEN_NAMES = {".env", "client_secret.json", "credentials.json", "token.json"}
 FORBIDDEN_SUFFIXES = {".mp4", ".mov", ".mkv", ".webm", ".zip", ".sqlite", ".db"}
@@ -68,6 +76,11 @@ def main() -> int:
             errors.append("manifest_connector_id_mismatch")
         if manifest.get("provider") != PROVIDER:
             errors.append("manifest_provider_mismatch")
+        if manifest.get("phase") != "experimental":
+            errors.append("manifest_phase_must_be_experimental")
+        evidence = manifest.get("planes", {}).get("evidence", {})
+        if evidence.get("status") != "implemented_unadmitted":
+            errors.append("evidence_plane_must_remain_unadmitted")
         commit = manifest.get("planes", {}).get("publication_commit", {})
         if commit.get("status") != "disabled":
             errors.append("publication_commit_must_be_disabled")
@@ -78,6 +91,24 @@ def main() -> int:
             errors.append("scraping_must_be_disabled")
         if policy.get("credentials_in_repo") is not False:
             errors.append("credentials_must_be_outside_repo")
+        auth = manifest.get("auth", {})
+        if auth.get("mode") != "instagram_login":
+            errors.append("auth_mode_must_be_instagram_login")
+        if auth.get("required_scope") != "instagram_business_basic":
+            errors.append("basic_scope_mismatch")
+
+    env_example = (ROOT / ".env.example").read_text(encoding="utf-8")
+    for line in env_example.splitlines():
+        if line.startswith("AOA_INSTAGRAM_ACCESS_TOKEN=") and line.split("=", 1)[1]:
+            errors.append("example_access_token_must_be_empty")
+
+    client_source = (
+        ROOT / "src" / "aoa_instagram_connector" / "client.py"
+    ).read_text(encoding="utf-8")
+    if '"Authorization"' not in client_source:
+        errors.append("bearer_authorization_header_missing")
+    if "?access_token=" in client_source or "&access_token=" in client_source:
+        errors.append("access_token_must_not_appear_in_url")
 
     for path in ROOT.rglob('*'):
         if not path.is_file() or IGNORED_PARTS.intersection(path.parts):

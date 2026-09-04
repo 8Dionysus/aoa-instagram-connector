@@ -2,15 +2,17 @@
 
 Policy-gated Instagram evidence and publication-plan connector for AoA.
 
-Phase 0 is an offline, policy-first skeleton. It makes no live API calls,
-contains no credentials, and cannot publish content.
+Phase 1 source is prepared for Instagram API with Instagram Login. It can perform
+two bounded reads against an authorized Business or Creator account: account
+identity and one page of owned media. It contains no credentials and cannot
+publish content.
 
 ## Owned here
 
 - Instagram-specific source policy and capability discovery
 - normalized evidence-packet and publication-plan contracts
 - provider-specific parsing, preparation, validation, and local decisions
-- a fail-closed local CLI and repository validator
+- a fail-closed local CLI, secret-file boundary, and repository validator
 
 ## Owned elsewhere
 
@@ -21,12 +23,30 @@ contains no credentials, and cannot publish content.
 
 ## Current boundary
 
-Official API access is centered on authorized professional accounts. Consumer-account access and unrestricted public search are not assumed; Stories and other publishing surfaces must be rechecked against account type and current Meta review requirements.
+The admitted path is Instagram Login with `instagram_business_basic`. It does
+not require a linked Facebook Page. Consumer accounts, arbitrary public search,
+hashtag discovery, ads/tagging, comments, insights, webhooks, and every write
+operation remain outside the first admission.
 
-Official documentation: https://developers.facebook.com/docs/instagram-platform/
+Official documentation:
+https://developers.facebook.com/documentation/instagram-platform/instagram-api-with-instagram-login
 
 API terms, scopes, quotas, review requirements, and pricing can change. Recheck
-the official documentation before implementing or admitting a live adapter.
+the official documentation before admitting a live account or runtime.
+
+## Quick connection
+
+```bash
+python -m pip install -e ".[dev]"
+aoa-instagram setup --json
+# Fill ~/.config/aoa-instagram-connector/credentials.env locally.
+aoa-instagram config-check --json
+aoa-instagram auth-check --json
+aoa-instagram media-list --limit 10 --json
+```
+
+The operator must generate the token in the Meta App Dashboard. Never paste a
+token into chat. See [docs/SETUP_INSTAGRAM.md](docs/SETUP_INSTAGRAM.md).
 
 ## Bootstrap checks
 
@@ -38,5 +58,6 @@ pytest
 aoa-instagram doctor --json
 ```
 
-A green bootstrap proves only the source skeleton. It does not prove API access,
-OAuth, deployment, publication, or consumer acceptance.
+A green bootstrap proves only source readiness. A successful `auth-check`
+proves only the authorized account read, not runtime deployment, publication,
+or consumer acceptance.

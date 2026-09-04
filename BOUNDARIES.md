@@ -4,7 +4,7 @@
 
 | Plane | Phase 0 state | Effect |
 | --- | --- | --- |
-| Evidence discovery/read | planned | read-only |
+| Owned profile/media read | implemented, not live-admitted | read-only |
 | Draft preparation | planned | no external effect |
 | Publication plan | planned | no external effect |
 | Publication commit | disabled | external write, approval required |
@@ -14,7 +14,9 @@ the same claim as processing completion, public visibility, or consumer acceptan
 
 ## Provider-specific admission
 
-Official API access is centered on authorized professional accounts. Consumer-account access and unrestricted public search are not assumed; Stories and other publishing surfaces must be rechecked against account type and current Meta review requirements.
+The current admission is Instagram Login, `instagram_business_basic`, and an
+owned Business or Creator account. A successful basic read does not admit
+comments, messages, insights, webhooks, hashtag search, ads/tagging, or writes.
 
 ## Data and privacy
 
