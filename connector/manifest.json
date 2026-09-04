@@ -3,15 +3,15 @@
   "connector_id": "aoa-instagram-connector",
   "provider": "instagram",
   "display_name": "Instagram",
-  "version": "0.1.0-dev",
-  "phase": "skeleton",
+  "version": "0.2.0-dev",
+  "phase": "experimental",
   "source_family": "social-network",
   "runtime_owner": "abyss-stack",
   "policy_snapshot_date": "2026-09-04",
   "official_docs": "https://developers.facebook.com/docs/instagram-platform/",
   "planes": {
     "evidence": {
-      "status": "planned",
+      "status": "implemented_unadmitted",
       "effect": "read_only"
     },
     "draft": {
@@ -30,10 +30,15 @@
   },
   "capabilities": {
     "read": [
+      "professional_account_profile",
       "professional_account_media",
       "comments",
       "mentions",
-      "hashtag_media"
+      "media_insights"
+    ],
+    "implemented_read": [
+      "professional_account_profile",
+      "professional_account_media"
     ],
     "publish": [
       "image",
@@ -44,8 +49,17 @@
     ],
     "deferred": [
       "consumer_account_access",
-      "arbitrary_public_search"
+      "arbitrary_public_search",
+      "hashtag_media",
+      "ads_and_tagging"
     ]
+  },
+  "auth": {
+    "mode": "instagram_login",
+    "required_scope": "instagram_business_basic",
+    "default_api_version": "v26.0",
+    "credentials": "operator-local",
+    "access_level": "standard_for_owned_or_test_accounts"
   },
   "policy": {
     "official_api_only": true,

@@ -1,12 +1,12 @@
 # Status
 
-- Stage: Phase 0 skeleton
+- Stage: Phase 1 source prepared; live admission pending owner token
 - Source validation: available
-- Official API adapter: not implemented
+- Official API adapter: implemented for `/me` and one owned-media page
 - Credentials/OAuth: not configured
 - Live MCP/HTTP runtime: not deployed
-- Evidence ingestion: not operational
+- Evidence normalization: implemented, live API not yet verified
 - Draft preparation: not operational
 - Publication: disabled
 
-This repository is a working foundation, not a live connector.
+Publication remains disabled. This is not yet a live-admitted connector.

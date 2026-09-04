@@ -9,3 +9,4 @@ rationale, consequences, source surfaces, and effect authority in every record.
 ## Index
 
 - [AOA-INSTAGRAM-D-0001](./AOA-INSTAGRAM-D-0001-independent-provider-owner.md) — keep Instagram as an independent connector owner
+- [AOA-INSTAGRAM-D-0002](./AOA-INSTAGRAM-D-0002-instagram-login-basic-read-bootstrap.md) — use Instagram Login and basic owned-account reads for Phase 1

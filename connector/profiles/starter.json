@@ -3,9 +3,13 @@
   "profile_id": "starter",
   "connector_id": "aoa-instagram-connector",
   "provider": "instagram",
-  "mode": "offline_skeleton",
+  "mode": "instagram_login",
+  "api_version": "v26.0",
+  "required_scopes": [
+    "instagram_business_basic"
+  ],
   "account_allowlist": [],
   "topic_allowlist": [],
   "publication_mode": "disabled",
-  "notes": "Copy to operator-local configuration before adding account identifiers."
+  "notes": "Owned professional account read bootstrap; publication remains disabled."
 }
